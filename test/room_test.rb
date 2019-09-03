@@ -10,7 +10,7 @@ describe "initialize" do
       room = Hotel::Room.new(i+1)
       # Assert
       expect( room ).must_be_instance_of Hotel::Room
-      i + 1
+      i += 1
     end
   end
 end
@@ -18,15 +18,9 @@ end
 describe "self.all method" do
   it "should return an array of all room instances" do
     #Arrange
-    i = 0
-    rooms = []
-    20.times do
-      room = Hotel::Room.new(i+1)
-      rooms << room
-      i + 1
-    end
+    Hotel::Room.all
 
     #Assert
-    expect( rooms ).must_be_kind_of Array
+    expect(Hotel::Room.all).must_be_kind_of Array
   end
 end
