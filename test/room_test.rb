@@ -4,9 +4,10 @@ require 'pry'
 
 describe "initialize" do
   it "should create a valid instance of room" do
+    TOTAL_ROOMS = 20
     # Arrange
     i = 0
-    20.times do
+    TOTAL_ROOMS.times do
       room = Hotel::Room.new(i+1)
       # Assert
       expect( room ).must_be_instance_of Hotel::Room
