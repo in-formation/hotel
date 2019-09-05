@@ -3,7 +3,7 @@ require 'pry'
 
 module Hotel
   class Reservation
-    attr_reader :start_date, :end_date, :nightly_rate
+    attr_reader :start_date, :end_date, :nightly_rate, :date_range
     attr_accessor :room_no
 
     def initialize(start_date,end_date)
@@ -17,6 +17,8 @@ module Hotel
 
       @nightly_rate = 200
       @room_no = nil
+
+      @date_range = valid_dates.date_range
     end
 
     def total_cost

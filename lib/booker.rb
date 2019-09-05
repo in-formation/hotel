@@ -23,28 +23,28 @@ module Hotel
       
     end
 
-    # def available_rooms?(start_date,end_date)
-    #   valid_dates = Hotel::Calendar.new(start_date,end_date)
+    def available_rooms_list(start_date,end_date)
+      available_rooms_list = []
+      start_date = Date.parse(start_date)
+      end_date = Date.parse(end_date)
+      searching_date_range = (start_date..end_date).to_a
+      
+      @reservations.each do |reservation|
+        if (reservation.date_range & searching_date_range).empty?
+          available_rooms_list << reservation
+        end
+      end
 
-    #   if valid_dates
-    #     @reservations.each do |reservation|
-    #       reservation.start_date
-
-    #     end
-    #   end
-    # end
+      return available_rooms_list
+    end
     
     def reserve_room (start_date,end_date)
-      valid_dates = Hotel::Calendar.new(start_date,end_date)
+      new_reservation = Hotel::Reservation.new(start_date,end_date)
 
-      if valid_dates
-        new_reservation = Hotel::Reservation.new(start_date,end_date)
+      new_reservation.room_no = @rooms.sample
 
-        new_reservation.room_no = @rooms.sample
-
-        @reservations << new_reservation
-        return new_reservation
-      end
+      @reservations << new_reservation
+      return new_reservation
     end
     
     def find_by_date(date)
@@ -58,7 +58,5 @@ module Hotel
       end
       return reservations_return
     end
-
-    
   end
 end

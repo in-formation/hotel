@@ -65,12 +65,31 @@ describe "Booker Testing" do
 
   describe "find_available_room method" do
     it "should return available roooms for given date range" do
+      start_date = "3/9/2019"
+      end_date = "5/9/2019"
+      reserving_room = Hotel::Booker.new
+      reserving_room.reserve_room(start_date,end_date)
 
-      # expect(?????.available_rooms?).must_be_kind_of Array
+      checking_room = Hotel::Booker.new
+      rooms_available = checking_room.available_rooms_list("6/9/2019","7/9/2019")
 
-      # available_rooms.each do |room|
-      #   expect(room).must_be_instance_of Hotel::Room
-      # end
+      expect( rooms_available ).must_be_kind_of Array
+
+      rooms_available.each do |room|
+        expect(room).must_be_instance_of Hotel::Room
+      end
+    end
+
+    it "should properly handle overlapping dates" do
+      start_date = "3/9/2019"
+      end_date = "5/9/2019"
+      reserving_room = Hotel::Booker.new
+      reserving_room.reserve_room(start_date,end_date)
+
+      checking_room = Hotel::Booker.new
+      rooms_available = checking_room.available_rooms_list("4/9/2019","6/9/2019")
+      
+      expect( rooms_available ).must_be_empty
     end
 
     it "should return nil if no reservations available for given date range" do
