@@ -5,6 +5,7 @@ require 'pry'
 
 module Hotel
   class Booker
+    attr_reader :rooms
     attr_accessor :reservations, :start_date,:end_date
     
     def initialize
@@ -21,13 +22,26 @@ module Hotel
       end
       
     end
+
+    # def available_rooms?(start_date,end_date)
+    #   valid_dates = Hotel::Calendar.new(start_date,end_date)
+
+    #   if valid_dates
+    #     @reservations.each do |reservation|
+    #       reservation.start_date
+
+    #     end
+    #   end
+    # end
     
     def reserve_room (start_date,end_date)
       valid_dates = Hotel::Calendar.new(start_date,end_date)
+
       if valid_dates
         new_reservation = Hotel::Reservation.new(start_date,end_date)
+
         new_reservation.room_no = @rooms.sample
-        
+
         @reservations << new_reservation
         return new_reservation
       end
@@ -35,7 +49,8 @@ module Hotel
     
     def find_by_date(date)
       reservations_return = []
-      date = Time.parse(date)
+      date = Date.parse(date)
+      
       @reservations.each do |reservation|
         if date >= reservation.start_date && date <= reservation.end_date
           reservations_return << reservation

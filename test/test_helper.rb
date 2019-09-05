@@ -3,6 +3,8 @@ SimpleCov.start do
   add_filter 'test/'
 end
 
+require 'date'
+
 require "minitest"
 require "minitest/autorun"
 require "minitest/reporters"
