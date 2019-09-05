@@ -4,6 +4,7 @@ require 'pry'
 module Hotel
   class Reservation
     attr_reader :start_date, :end_date, :nightly_rate
+    attr_accessor :room_no
 
     SECONDS_TO_DAY = 86400
 
@@ -12,6 +13,7 @@ module Hotel
     @start_date = start_date
     @end_date = end_date
     @nightly_rate = 200
+    @room_no = nil
     end
 
     def total_cost
