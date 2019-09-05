@@ -1,12 +1,15 @@
 require_relative 'reservation'
 require_relative 'room'
+require 'pry'
 
 module Hotel
   class Booker
-    attr_accessor :reservations
+    attr_accessor :reservations, :start_date,:end_date
     
     def initialize
       @reservations = []
+      @start_date = nil
+      @end_date = nil
     end
     
     def reserve_room (start_date,end_date)
@@ -17,8 +20,9 @@ module Hotel
     
     def find_by_date(date)
       reservations_return = []
+      date = Time.parse(date)
       @reservations.each do |reservation|
-        if reservation.include?(date)
+        if date >= reservation.start_date && date <= reservation.end_date
           reservations_return << reservation
         end
       end
