@@ -5,7 +5,7 @@ module Hotel
     
     def initialize(start_date,end_date)
       
-      if Time.parse(start_date) < Time.parse(end_date)
+      if start_date < end_date
         @start_date = start_date
         @end_date = end_date
       else

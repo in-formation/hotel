@@ -1,5 +1,6 @@
 require_relative 'reservation'
 require_relative 'room'
+require_relative 'Calendar'
 require 'pry'
 
 module Hotel
@@ -13,9 +14,12 @@ module Hotel
     end
     
     def reserve_room (start_date,end_date)
-      new_reservation = Hotel::Reservation.new(start_date,end_date)
-      @reservations << new_reservation
-      return new_reservation
+      valid_dates = Hotel::Calendar.new(start_date,end_date)
+      if valid_dates
+        new_reservation = Hotel::Reservation.new(start_date,end_date)
+        @reservations << new_reservation
+        return new_reservation
+      end
     end
     
     def find_by_date(date)
