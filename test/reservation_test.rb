@@ -11,22 +11,13 @@ describe "initialize" do
   end
 end
 
-# describe "find_by_date" do
-#   it "returns an array of reservation on certain date" do
-#   start_date = Time.parse("3/9/2019")
-#   end_date = Time.parse("5/9/2019")
-  
-#   new_reservation = Hotel::Reservation.new(start_date,end_date)
+describe "total_date" do
+  it "correctly calculates total_cost" do
+    start_date = Time.parse("3/9/2019")
+    end_date = Time.parse("5/9/2019")
 
-#   start_date = Time.parse("3/9/2019")
-#   end_date = Time.parse("5/9/2019")
+    new_reservation = Hotel::Reservation.new(start_date,end_date)
     
-#   new_reservation_2 = Hotel::Reservation.new(start_date,end_date)
-
-#   date = Time.parse("9/3/2019")
-
-#   reservations = Hotel::Reservation.find_by_date(date)
-
-#   expect(reservations).should_be_instance_of Array
-#   end
-# end
+    expect( new_reservation.total_cost ).must_equal 400.00
+  end
+end
