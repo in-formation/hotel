@@ -79,7 +79,7 @@ describe "Booker Testing" do
       end
     end
 
-    it "should properly handle overlapping dates" do
+    it "should properly handle overlapping dates aka not available rooms" do
       start_date = "3/9/2019"
       end_date = "5/9/2019"
       reserving_room = Hotel::Booker.new
@@ -105,12 +105,13 @@ describe "Booker Testing" do
       end
     end
 
-    it "should return nil if no reservations available for given date range" do
-      
-    end
-
     it "should raise an Argument Error if given date range invalid" do
-
+      start_date = "3/9/2019"
+      end_date = "5/9/2019"
+      reserving_room = Hotel::Booker.new
+      new_reservation = reserving_room.reserve_room(start_date,end_date)
+      
+      expect{reserving_room.available_rooms_list("5/9/2019","4/9/2019")}.must_raise ArgumentError
     end
   end
 end
