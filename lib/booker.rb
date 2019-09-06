@@ -27,11 +27,11 @@ module Hotel
       available_rooms_list = []
       start_date = Date.parse(start_date)
       end_date = Date.parse(end_date)
-      searching_date_range = (start_date..end_date).to_a
+      searching_date_range = (start_date..(end_date-1)).to_a
       
       @reservations.each do |reservation|
         if (reservation.date_range & searching_date_range).empty?
-          available_rooms_list << reservation
+          available_rooms_list << reservation.room_no
         end
       end
 

@@ -68,14 +68,13 @@ describe "Booker Testing" do
       start_date = "3/9/2019"
       end_date = "5/9/2019"
       reserving_room = Hotel::Booker.new
-      reserving_room.reserve_room(start_date,end_date)
+      new_reservation = reserving_room.reserve_room(start_date,end_date)
+      
+      checking_rooms = reserving_room.available_rooms_list("6/9/2019","7/9/2019")
 
-      checking_room = Hotel::Booker.new
-      rooms_available = checking_room.available_rooms_list("6/9/2019","7/9/2019")
-
-      expect( rooms_available ).must_be_kind_of Array
-
-      rooms_available.each do |room|
+      expect( checking_rooms ).must_be_kind_of Array
+      
+      checking_rooms.each do |room|
         expect(room).must_be_instance_of Hotel::Room
       end
     end
@@ -84,16 +83,30 @@ describe "Booker Testing" do
       start_date = "3/9/2019"
       end_date = "5/9/2019"
       reserving_room = Hotel::Booker.new
-      reserving_room.reserve_room(start_date,end_date)
-
-      checking_room = Hotel::Booker.new
-      rooms_available = checking_room.available_rooms_list("4/9/2019","6/9/2019")
+      new_reservation = reserving_room.reserve_room(start_date,end_date)
       
-      expect( rooms_available ).must_be_empty
+      checking_rooms = reserving_room.available_rooms_list("4/9/2019","6/9/2019")
+      
+      expect( checking_rooms ).must_be_empty
+    end
+
+    it "should properly handle check out and check in dates overlapping" do
+      start_date = "3/9/2019"
+      end_date = "5/9/2019"
+      reserving_room = Hotel::Booker.new
+      new_reservation = reserving_room.reserve_room(start_date,end_date)
+      
+      checking_rooms = reserving_room.available_rooms_list("5/9/2019","6/9/2019")
+      
+      expect( checking_rooms ).must_be_kind_of Array
+      
+      checking_rooms.each do |room|
+        expect(room).must_be_instance_of Hotel::Room
+      end
     end
 
     it "should return nil if no reservations available for given date range" do
-
+      
     end
 
     it "should raise an Argument Error if given date range invalid" do
