@@ -27,15 +27,44 @@ describe "Booker Testing" do
       expect( reserving_room.reservations ).must_be_kind_of Array
     end
 
-    it "should assign a random room" do
+    # it "should assign a random room" do
+    #   start_date = "3/9/2019"
+    #   end_date = "5/9/2019"
+      
+    #   reserving_room = Hotel::Booker.new
+      
+    #   reservation = reserving_room.reserve_room(start_date,end_date)
+      
+    #   expect( reservation.room_no ).must_be_instance_of Hotel::Room
+    # end
+  end
+
+  describe "assign_available_room" do
+    it "should assign a room that is truly available" do
       start_date = "3/9/2019"
       end_date = "5/9/2019"
-      
       reserving_room = Hotel::Booker.new
+      reservation_1 = reserving_room.reserve_room(start_date,end_date)
+      expect( reservation_1.room_no ).must_be_instance_of Hotel::Room
       
-      reservation = reserving_room.reserve_room(start_date,end_date)
+      start_date = "3/9/2019"
+      end_date = "4/9/2019"
+      reservation_2 = reserving_room.reserve_room(start_date,end_date)
+      # binding.pry
+      expect( reservation_2.room_no ).must_be_instance_of Hotel::Room
+      expect( reservation_2.room_no.room_number ).wont_be_same_as reservation_1.room_no.room_number
+    end
+
+    it "should return nil if no rooms are available" do
+      start_date = "3/9/2019"
+      end_date = "5/9/2019"
+      reserving_room = Hotel::Booker.new
+
+      20.times do
+        reserving_room.reserve_room(start_date,end_date)
+      end
       
-      expect( reservation.room_no ).must_be_instance_of Hotel::Room
+      expect{reserving_room.reserve_room(start_date,end_date)}.must_raise StandardError
     end
   end
 

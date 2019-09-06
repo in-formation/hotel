@@ -45,11 +45,28 @@ module Hotel
     
     def reserve_room (start_date,end_date)
       new_reservation = Hotel::Reservation.new(start_date,end_date)
-
-      new_reservation.room_no = @rooms.sample
+      
+      room_assignment = assign_available_room(new_reservation)
+      new_reservation.room_no = room_assignment
+      room_assignment.reservations << new_reservation
 
       @reservations << new_reservation
       return new_reservation
+    end
+
+    def assign_available_room(new_reservation)
+      @rooms.each do |room|
+        if room.reservations.length == 0
+          return room
+        else
+          room.reservations.each do |reservation|
+            if (reservation.date_range & new_reservation.date_range).empty?
+              return room
+            end
+          end
+        end
+      end
+      raise StandardError.new("No available rooms")
     end
     
     def find_by_date(date)
