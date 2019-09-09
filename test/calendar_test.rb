@@ -11,7 +11,7 @@ describe "Calendar Testing" do
       expect( date_check ).must_be_instance_of Hotel::Calendar
     end
 
-    it "should raise an argument if dates are invalid" do
+    it "should raise an argument error if dates are invalid" do
       end_date = "3/9/2019"
       start_date = "5/9/2019"
       

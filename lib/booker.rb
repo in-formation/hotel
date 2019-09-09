@@ -43,13 +43,14 @@ module Hotel
       return available_rooms_list
     end
     
-    def reserve_room (start_date,end_date)
+    def reserve_room(start_date,end_date)
       new_reservation = Hotel::Reservation.new(start_date,end_date)
       
       room_assignment = assign_available_room(new_reservation)
-      new_reservation.room_no = room_assignment
-      room_assignment.reservations << new_reservation
 
+      new_reservation.room_no = room_assignment
+
+      room_assignment.reservations << new_reservation
       @reservations << new_reservation
       return new_reservation
     end
